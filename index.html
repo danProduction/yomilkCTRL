@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html data-ember-extension="1">
+<!--<![endif]-->
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="google-site-verification" content="X-NyWbTQ-1CgZ7cvLZYPOc0BzO7PblJv201J3PJXAJI">
+
+
+  <title>VideoSync</title>
+
+
+
+  <script type="text/javascript" src="./assets/pd.js"></script>
+  <script type="text/javascript" async="" src="./assets/inpage_linkid.js" id="undefined"></script>
+  <script type="text/javascript" async="" src="./assets/bf.min.js"></script>
+  <script type="text/javascript" async="" src="./assets/ga.js"></script>
+  <script src="./assets/30715011.js"></script>
+
+  
+  <!--[if lt IE 9]> <script src="/static/js/ie.js?ts=1404164785"></script> <![endif]-->
+
+  
+
+</head>
+
+<body id="app" class="satemplate" data-ember-extension="1">
+
+
+  <div id="alert_container" class="alert  hidden"></div>
+  <style media="screen">
+  a[name=tutorial]:before {
+    content: "";
+    display: block;
+    height: 100px;
+    /* fixed header height*/
+    margin: -100px 0 0;
+    /* negative fixed header height */
+  }
+  #app-hero {
+    background: white;
+    background-attachment: fixed;
+  }
+  #demo {
+    background: white;
+    background-attachment: fixed;
+  }
+  .code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 15px;
+  }
+  </style>
+
+
+  <div class="section padding-extra white" id="demo" style="margin-top: -100px; min-height: 0px;">
+    <div id="wrap" style="margin: 0 auto; display: table; width: 1350px;">
+      <div style="float: left; margin: 15px;">
+        <div id="player1"></div>
+        <div class="panel panel-default" style="margin-bottom: -30px;">
+          <div class="panel-heading">Video Player 1's Publish Stream:</div>
+          <div id="channel1" class="panel-body console" style="height: 100px; overflow: auto;">
+
+          </div>
+        </div>
+      </div>
+      <div style="float: left; margin: 15px;">
+        <div id="player2"></div>
+        <div class="panel panel-default" style="margin-bottom: -30px;">
+          <div class="panel-heading">Video Player 2's Publish Stream:</div>
+          <div id="channel2" class="panel-body console" style="height: 100px; overflow: auto;">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a name="tutorial"></a>
+
+
+
+
+  <footer>
+
+  </footer>
+
+  
+  <!-- inserting query field -->
+  <form name="myForm" onsubmit="return updateYID()" method="post">
+    Youtube ID: <input type="text" name="yid">
+    <input type="submit" value="Submit">
+  </form>
+
+  <script src="./assets/pubnub.min.js"></script>
+  <script src="./assets/main.js"></script>
+
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="./videosync.js"></script>
+
+  <script>
+
+
+  <!--
+    var youtubeID = 'WcsoO__cnLU';
+   alert(youtubeID);
+
+  function updateYID() {
+    var x = document.forms["myForm"]["yid"].value;
+    if (x==null || x=="") {
+      alert("youtube id must be filled out");
+
+      return false;
+    }
+      youtubeID = x;
+      alert(youtubeID);
+     document.location.reload(true);
+
+  }
+  -->
+
+
+
+  var consolePrint = function(msg) {
+    var divId = "channel1";
+    if (msg.sender === "Player2") {
+      divId = "channel2";
+    }
+    var time = msg.time;
+    if (time === null) {
+      $("#" + divId).prepend("{type: " + msg.type + "}<br>");
+    }
+    else {
+      $("#" + divId).prepend("{type: " + msg.type + ", time: " + time + "}<br>");
+    }
+  };
+
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var playerVars = {
+    modestbranding: 1,
+    theme: 'light',
+    showinfo: 0,
+    rel: 0,
+    fs: 0
+  };
+
+  var rand = "1";
+
+  var vidSync1 = new VideoSync(youtubeID + rand, "Player1");
+  var vidSync2 = new VideoSync(youtubeID + rand, "Player2");
+
+  var player1;
+  var player2;
+
+  function onYouTubeIframeAPIReady() {
+
+
+    player1 = new YT.Player('player1', {
+      height: '390',
+      width: '640',
+      videoId: youtubeID,
+      playerVars: playerVars,
+      events: {
+        'onReady': vidSync1.onPlayerReady,
+        'onStateChange': vidSync1.onPlayerStateChange
+      }
+    });
+  }
+
+  var pubnub = PUBNUB.init({
+    publish_key: 'pub-c-242fbbf1-4cc6-4153-8f20-a671697f15ec',
+    subscribe_key: 'sub-c-2361676c-1e85-11e4-bbbf-02ee2ddab7fe',
+    uuid: "the watcher"
+  });
+
+  pubnub.subscribe({
+    channel: youtubeID + rand,
+    callback: consolePrint
+  });
+  </script>
+
+<!--
+  <div id="loading">
+    <div class="mask"></div>
+    <div class="indication">
+      <img src="./assets/loading.gif">
+      <h3 class="text-red">Loading...</h3>
+    </div>
+  </div>
+-->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1009365105;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="./assets/conversion.js">
+</script>
+
+
+<script type="text/javascript">
+var bf_url = "pubnub";
+(function () {
+  var e = document.createElement("script");
+  e.type = "text/javascript";
+  e.async = !0;
+  e.src = "//d2sdf28wg0skh3.cloudfront.net/bf.min.js";
+  var t = document.getElementsByTagName("script")[0];
+  t.parentNode.insertBefore(e, t)
+})();
+</script>
+
+
+<script type="text/javascript" src="chrome-extension://bmdblncegkenkacieihfhpjfppoconhi/in-page-script.js"></script>
+</body>
+
+</html>
+
