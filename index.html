@@ -153,8 +153,8 @@
 
   var rand = "1";
 
-  var vidSync1 = new VideoSync('WcsoO__cnLU' + rand, "Player1");
-  var vidSync2 = new VideoSync('WcsoO__cnLU' + rand, "Player2");
+  var vidSync1 = new VideoSync("WcsoO__cnLU" + rand, "Player1");
+  var vidSync2 = new VideoSync("WcsoO__cnLU" + rand, "Player2");
 
   var player1;
   var player2;
@@ -181,7 +181,7 @@
   });
 
   pubnub.subscribe({
-    channel: 'WcsoO__cnLU' + rand,
+    channel: "WcsoO__cnLU" + rand,
     callback: consolePrint
   });
   </script>
