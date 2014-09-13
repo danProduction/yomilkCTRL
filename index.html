@@ -105,7 +105,7 @@
 
   <!--
     var youtubeID = 'WcsoO__cnLU';
-   alert(youtubeID);
+   
 
   function updateYID() {
     var x = document.forms["myForm"]["yid"].value;
@@ -153,8 +153,8 @@
 
   var rand = "1";
 
-  var vidSync1 = new VideoSync(youtubeID + rand, "Player1");
-  var vidSync2 = new VideoSync(youtubeID + rand, "Player2");
+  var vidSync1 = new VideoSync('WcsoO__cnLU' + rand, "Player1");
+  var vidSync2 = new VideoSync('WcsoO__cnLU' + rand, "Player2");
 
   var player1;
   var player2;
@@ -165,7 +165,7 @@
     player1 = new YT.Player('player1', {
       height: '390',
       width: '640',
-      videoId: youtubeID,
+      videoId: 'WcsoO__cnLU',
       playerVars: playerVars,
       events: {
         'onReady': vidSync1.onPlayerReady,
@@ -181,7 +181,7 @@
   });
 
   pubnub.subscribe({
-    channel: youtubeID + rand,
+    channel: 'WcsoO__cnLU' + rand,
     callback: consolePrint
   });
   </script>
